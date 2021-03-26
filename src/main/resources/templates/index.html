@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+		
+		<style>
+		
+		*{
+		margin:0px;
+		padding:0px;
+		}
+		
+		#act{
+		
+		visibility:visible;
+		
+		}
+		
+		#nonact{
+		
+		display:none;
+		visibility:hidden;
+		
+		}
+		
+		
+		table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+th { 
+  background: #333; 
+  color: white; 
+  font-weight: bold; 
+}
+td, th { 
+  padding: 6px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+}
+
+		
+	@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	}
+	
+@media only screen and (min-width: 951px){
+
+		table{
+		
+		  margin-left: auto;
+ 		  margin-right: auto;
+		
+		}
+}
+
+input[type=text]{
+
+border:radius;
+height:37px;
+margin-top:3px;
+
+}
+
+input[type=text]:focus {
+  background-color: lightgreen;
+}
+		</style>
+
+    </head>
+	<body>
+		
+
+
+					
+					<form th:action="@{calcul}" method="POST" style="text-align:center;">
+					
+										Numero Client:<input   type="text" placeholder="Search" name="enrg" style="text-align:center">  
+										<button  class="btn btn-outline-success my-2 my-sm-0" type="submit">envoyer</button>
+										
+					
+					</form>
+					
+					<p style="color:red;text-align:center" th:text="${error}"></p>
+					
+					
+				<h1 style="text-align:center"  th:id="${isactive}">Client Infos</h1>
+					
+					<center>
+					<table class="table"  th:id="${isactive}">
+					
+					  <tr>
+					    <th >nomClient</th>
+					    <th >emailClient</th>
+					    <th >telephoneClient</th>
+					    <th >villeClient</th>
+					  </tr>
+					  
+				
+					  <tr>
+					    <td  th:text="${p.nomClient}"></td>
+					    <td  th:text="${p.emailClient}"></td>
+					    <td th:text="${p.telephoneClient}"></td>
+					    <td  th:text="${p.villeClient}"></td>
+					  </tr>
+					 
+			
+					 
+					</table>
+					</center>
+	
+					<h1 style="text-align:center"  th:id="${isactive}">Abonnement GSM</h1>
+					
+					<table class="table"  th:id="${isactive}">
+					
+					  <tr>
+						    <th scope="col">Nom Abonnement</th>
+						    <th scope="col">Date Abonnement</th>
+						    <th scope="col">Solde</th>
+						    <th scope="col">Fidelio</th>
+					  </tr>
+					  
+						  <div th:each="gsm:${Abgsm}" >
+							  <tr>
+							  
+									<td th:text="${gsm.nomAb}"></td>
+									<td th:text="${gsm.dateAb}"></td>
+									<td th:text="${gsm.solde}"></td>
+									<td th:text="${gsm.fidelio}"></td>
+								  
+							  </tr>
+						 </div>
+						 
+					</table>
+					
+					
+					
+						<h1 style="text-align:center"  th:id="${isactive}">Abonnement Fixe</h1>
+					
+					<table class="table"  th:id="${isactive}">
+					
+					           <tr>
+							     	<th scope="col">Nom Abonnement</th>
+								    <th scope="col">Date Abonnement</th>
+								    <th scope="col">Solde</th>
+								    <th scope="col">Debit</th>
+							   </tr>
+					
+							  <div th:each="fixe:${Abfixe}">
+							  
+							  <tr>
+								
+									<td th:text="${fixe.nomAb}"></td>
+									<td th:text="${fixe.dateAb}"></td>
+									<td th:text="${fixe.solde}"></td>
+									<td th:text="${fixe.debit}"></td>
+									
+							</tr>
+									
+						      </div>
+							   
+					</table>
+					
+					
+					
+						<h1 style="text-align:center"  th:id="${isactive}">Factures Fixe</h1>
+					
+					<table class="table"  th:id="${isactive}">
+					
+					           <tr>
+							     	<th scope="col">Date dateFacture</th>
+								    <th scope="col">Montant Facture</th>
+								    <th scope="col">Recu</th>
+								    <th scope="col">Abonnement</th>
+							   </tr>
+					
+							  <div th:each="facf:${factf}">
+								
+								<tr>
+									<td th:text="${facf.dateFacture}"></td>
+									<td th:text="${facf.montantFacture}"></td>
+									<td th:text="${facf.recu}"></td>
+									<td th:text="${facf.abonnement}"></td>
+								</tr>
+									
+						      </div>
+							   
+					</table>
+		
+
+
+
+							<h1 style="text-align:center"  th:id="${isactive}">Factures GSM</h1>
+	
+					<table class="table" th:id="${isactive}">
+					
+					           <tr>
+							     	<th scope="col">Date dateFacture</th>
+								    <th scope="col">Montant Facture</th>
+								    <th scope="col">Recu</th>
+								    <th scope="col">Abonnement</th>
+							   </tr>
+					
+							  <div th:each="facg:${factg}">
+								
+								<tr>
+									<td th:text="${facg.dateFacture}"></td>
+									<td th:text="${facg.montantFacture}"></td>
+									<td th:text="${facg.recu}"></td>
+									<td th:text="${facg.abonnement}"></td>
+								</tr>
+									
+						      </div>
+							   
+					</table>
+		
+
+ 						
+
+
+
+	</body>
+</html>
